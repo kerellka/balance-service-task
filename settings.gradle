@@ -1,0 +1,4 @@
+rootProject.name = 'balance-service'
+include 'balance-service-api'
+include 'balance-service-client'
+include 'balance-service-server'

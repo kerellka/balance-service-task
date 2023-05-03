@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  balance-service:
+    build:
+      context: .
+    ports:
+      - "6565:6565"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-server/balance_service
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - ENABLE_SECOND_LEVEL_CACHE=true
+    volumes:
+      - ./:/app
+    depends_on:
+      - postgres-server
+
+  postgres-server:
+    image: postgres:13.9
+    ports:
+      - "5431:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=balance_service
+    volumes:
+      - postgres_data:/var/lib/postgres
+      - postgres_conf:/etc/postgres/conf.d
+volumes:
+  postgres_data:
+  postgres_conf:

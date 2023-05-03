@@ -1,0 +1,37 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.6.21'
+    id 'com.google.protobuf' version "0.8.17"
+    id 'application'
+}
+
+group = 'com.github.kerellka'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation project(":balance-service-api")
+
+    implementation "io.grpc:grpc-netty:$grpc_version"
+    implementation "io.grpc:grpc-protobuf:$grpc_version"
+    implementation "io.grpc:grpc-stub:$grpc_version"
+    implementation "io.grpc:grpc-kotlin-stub:$grpc_kotlin_version"
+
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
+}
+
+application {
+    mainClassName = 'MainKt'
+}
+
+jar {
+    manifest {
+        attributes "Main-Class": "com.github.kerellka.MainKt"
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_package = "com.github.kerellka.proto";
+
+package com.github.kerellka.proto;
+
+import "google/protobuf/wrappers.proto";
+import "google/protobuf/empty.proto";
+
+service BalanceService {
+  rpc getBalance(GetBalanceRequest) returns (GetBalanceResponse);
+  rpc changeBalance(ChangeBalanceRequest) returns (google.protobuf.Empty);
+}
+
+message GetBalanceRequest {
+  int64 id = 1;
+}
+
+message GetBalanceResponse {
+  google.protobuf.Int64Value amount = 1;
+}
+
+message ChangeBalanceRequest {
+  int64 id = 1;
+  int64 amount = 2;
+}
